@@ -23,7 +23,7 @@ def status(soup):
 
 def is_data_available(soup):
     table = soup.find(id = 'eta')
-    if table is None:
+    if table == None:
         p_content = soup.find('p')
         if 'Unavailable' in str(p_content):
             print ('Information Unavailble. Please check the train number.')
@@ -42,8 +42,12 @@ def main():
     args = parser.parse_args()
     train_num = args.num
     payload = {'tno':train_num, 'date':'0'}
-#12483
-    r = requests.get('http://spoturtrain.com/status.php', params = payload)
+    r = ''
+    try:
+        r = requests.get('http://spoturtrain.com/status.php', params = payload)
+    except:
+        print('Unable to retrieve info, check your internet connection')
+        sys.exit()
     train_info = collections.OrderedDict()
     train_info['url'] = r.url
     data = r.text
@@ -51,7 +55,7 @@ def main():
     is_data_available(soup)
     train_info['status'] = status(soup)
     train_info['timetable'] = timetable(soup)
-    train_info = json.dumps(train_info)
+    train_info = json.dumps(train_info , indent = 3)
     print (train_info)
 
 if __name__ == "__main__": main()
