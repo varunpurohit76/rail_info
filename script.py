@@ -37,11 +37,14 @@ def is_data_available(soup):
         sys.exit()
 
 def main():
+    days = {'today' :	0,'tomorrow' : 1, 'yesterday' : -1}
     parser = argparse.ArgumentParser()
-    parser.add_argument('num', help='Enter the train number', type = int)
+    parser.add_argument('train_num', help='Enter the train number', type = int)
+    parser.add_argument('--day',help='Enter the day',choices = ['today','tomorrow','yesterday'],default='today')
     args = parser.parse_args()
-    train_num = args.num
-    payload = {'tno':train_num, 'date':'0'}
+    train_num = args.train_num
+    day = args.day
+    payload = {'tno':train_num, 'date': days[day]}
     r = ''
     try:
         r = requests.get('http://spoturtrain.com/status.php', params = payload)
