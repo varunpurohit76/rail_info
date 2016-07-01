@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
 from bs4 import BeautifulSoup
-import requests
-import collections
-import json
-import sys
+import requests, collections, json, sys, argparse
 
 def timetable(soup):
     table =  soup.find(id='eta')
@@ -30,6 +27,9 @@ def is_data_available(soup):
         p_content = soup.find('p')
         if 'Unavailable' in str(p_content):
             print ('Information Unavailble. Please check the train number.')
+        elif 'busy' in str(p_content):
+            p_content = p_content.text.strip()
+            print (p_content)
         else:
             p_content = p_content.text.strip()
             print ('Train not running!')
@@ -37,7 +37,10 @@ def is_data_available(soup):
         sys.exit()
 
 def main():
-    train_num = sys.argv[1]
+    parser = argparse.ArgumentParser()
+    parser.add_argument('num', help='Enter the train number', type = int)
+    args = parser.parse_args()
+    train_num = args.num
     payload = {'tno':train_num, 'date':'0'}
 #12483
     r = requests.get('http://spoturtrain.com/status.php', params = payload)
