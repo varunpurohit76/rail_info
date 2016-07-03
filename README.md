@@ -6,9 +6,8 @@
 positional arguments:<br />
   train_num             Enter the train number<br />
 optional arguments:<br />
-  -h, --help            show this help message and exit<br />
-  --day {today,tomorrow,yesterday}<br />
-                        Enter the day<br />
+  day {today,tomorrow,yesterday} Enter the day<br />
+
 ----
 ### Example: ###
 
@@ -29,5 +28,4 @@ optional arguments:<br />
    }
 }
 ```
-----
 Scraped from [spotyourtrain.com](http://spoturtrain.com/)
