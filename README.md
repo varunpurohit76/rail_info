@@ -12,7 +12,7 @@ optional arguments:<br />
 ### Example: ###
 
 ```sh
-./script.py --day today 12952)
+./script.py --day today 12952
 {
    "url": "http://spoturtrain.com/status.php?tno=12952&date=0",
    "status": [
